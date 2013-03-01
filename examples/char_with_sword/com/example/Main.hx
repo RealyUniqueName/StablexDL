@@ -3,11 +3,9 @@ package com.example;
 import nme.Assets;
 import nme.events.Event;
 import nme.events.MouseEvent;
-import nme.geom.Rectangle;
 import nme.Lib;
 import ru.stablex.sxdl.SxObject;
 import ru.stablex.sxdl.SxStage;
-import ru.stablex.sxdl.SxTile;
 import ru.stablex.sxdl.SxTilesheet;
 import ru.stablex.sxdl.TweenObject;
 
@@ -18,9 +16,6 @@ import ru.stablex.sxdl.TweenObject;
 */
 class Main extends nme.display.Sprite {
 
-    static public var stage : SxStage;
-    static public var tile : SxTile;
-
 
     /**
     * Entry point
@@ -28,7 +23,7 @@ class Main extends nme.display.Sprite {
     */
     static public function main () : Void {
         //create stage
-        stage = new SxStage();
+        var stage : SxStage = new SxStage();
         stage.smooth = true;
 
         stage.addSprite("char", "assets/char.png");

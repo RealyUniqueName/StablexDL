@@ -2,6 +2,10 @@ package ru.stablex.sxdl;
 
 import nme.display.Graphics;
 import nme.display.Tilesheet;
+#if flash
+import nme.geom.Point;
+import nme.Vector;
+#end
 
 
 /**
@@ -20,7 +24,17 @@ class SxStage extends SxObject{
     //display list
     public var displayList : Array<SxObject>;
     //tilesheet builder
-    private var _tsBuilder : SxTsBuilder;
+    public var _tsBuilder : SxTsBuilder;
+    #if flash
+        public var vtx : Vector<Float>;
+        public var idx : Vector<Int>;
+        public var uv  : Vector<Float>;
+
+        public var topLeft     : Point;
+        public var topRight    : Point;
+        public var bottomLeft  : Point;
+        public var bottomRight : Point;
+    #end
 
 
     /**
@@ -34,6 +48,16 @@ class SxStage extends SxObject{
         this.displayListSize = 0;
         this.stage           = this;
         this._tsBuilder       = new SxTsBuilder();
+        #if flash
+            this.uv    = new Vector();
+            this.idx   = new Vector();
+            this.vtx   = new Vector();
+
+            this.topLeft     = new Point(0, 0);
+            this.topRight    = new Point(0, 0);
+            this.bottomLeft  = new Point(0, 0);
+            this.bottomRight = new Point(0, 0);
+        #end
     }//function new()
 
 
@@ -51,7 +75,11 @@ class SxStage extends SxObject{
         this.updateDisplayList();
 
         gr.clear();
-        this.tilesheet.drawTiles(gr, this.tileData, this.smooth, Tilesheet.TILE_TRANS_2x2);
+        #if flash
+            this.tilesheet.drawTiles(gr, this.tileData, this.vtx, this.idx, this.uv, this.smooth);
+        #else
+            this.tilesheet.drawTiles(gr, this.tileData, this.smooth, Tilesheet.TILE_TRANS_2x2);
+        #end
     }//function render()
 
 
@@ -96,8 +124,8 @@ class SxStage extends SxObject{
                 }
                 dirtyLength --;
 
-                tileDataIdx = obj.update(tileDataIdx);
                 obj.dirty   = false;
+                tileDataIdx = obj.update(tileDataIdx);
 
             //object didn't change and has a tile
             }else if( obj.tile != null ) {
@@ -107,6 +135,11 @@ class SxStage extends SxObject{
 
         if( tileDataIdx <= this.tileData.length ){
             this.tileData.splice(tileDataIdx, this.tileData.length - tileDataIdx + 1);
+            #if flash
+                this.vtx.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
+                this.idx.splice(Std.int(tileDataIdx / 7) * 6, this.vtx.length - Std.int(tileDataIdx / 7) * 6);
+                this.uv.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
+            #end
         }
 
     }//function updateDisplayList()
@@ -164,7 +197,9 @@ class SxStage extends SxObject{
     */
     public function lockSprites () : Void {
         this._tilesheet = this._tsBuilder.getTilesheet();
-        this._tsBuilder  = null;
+        #if !flash
+            this._tsBuilder  = null;
+        #end
     }//function lockSprites()
 
 

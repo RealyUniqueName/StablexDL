@@ -1,2 +1,3 @@
 example/build
+examples/*/build/*
 build.build

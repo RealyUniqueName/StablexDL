@@ -6,14 +6,14 @@
 
     <window width="800" height="600" fps="30"/>
 
-    <set name="SWF_VERSION" value="11" if="flash" />
+    <!-- set name="SWF_VERSION" value="11" if="flash" / -->
 
     <assets path="assets" include="*" />
 
     <haxelib name="nme" />
     <haxelib name="actuate" />
 
-    <classpath name="../src" />
+    <classpath name="../../src" />
 
     <ndll name="std" />
     <ndll name="regexp" />

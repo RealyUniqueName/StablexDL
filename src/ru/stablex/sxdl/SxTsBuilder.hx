@@ -18,7 +18,7 @@ class SxTsBuilder{
 
     //list of registered tiles
     public var tiles : Hash<SxTile>;
-    private var _tileData : Array<TileData>;
+    public var _tileData : Array<TileData>;
     //tile counter
     public var cntTiles : Int = 0;
     //description
@@ -140,6 +140,9 @@ class SxTsBuilder{
         //create tile rects
         for(data in this._tileData){
             ts.createTile(data.name, new Rectangle(data.pos.x, data.pos.y, data.bmp.width, data.bmp.height), data.spot);
+            #if flash
+                data.rect = new Rectangle(data.pos.x, data.pos.y, data.bmp.width, data.bmp.height);
+            #end
             data.bmp = null;
         }
 
@@ -251,7 +254,9 @@ class TileData {
     public var name : String;
     //tile position on tilesheet bitmap
     public var pos : {x:Int, y:Int};
-
+    #if flash
+    public var rect : Rectangle;
+    #end
 
     /**
     * Constructor
