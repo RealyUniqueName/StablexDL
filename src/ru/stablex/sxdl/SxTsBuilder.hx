@@ -140,10 +140,12 @@ class SxTsBuilder{
         //create tile rects
         for(data in this._tileData){
             ts.createTile(data.name, new Rectangle(data.pos.x, data.pos.y, data.bmp.width, data.bmp.height), data.spot);
-            #if flash
+            #if (flash && !notransform)
                 data.rect = new Rectangle(data.pos.x, data.pos.y, data.bmp.width, data.bmp.height);
             #end
+            #if !(flash && notransform)
             data.bmp = null;
+            #end
         }
 
         return ts;
@@ -254,7 +256,7 @@ class TileData {
     public var name : String;
     //tile position on tilesheet bitmap
     public var pos : {x:Int, y:Int};
-    #if flash
+    #if (flash && !notransform)
     public var rect : Rectangle;
     #end
 

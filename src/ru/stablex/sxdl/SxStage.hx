@@ -2,7 +2,7 @@ package ru.stablex.sxdl;
 
 import nme.display.Graphics;
 import nme.display.Tilesheet;
-#if flash
+#if (flash && !notransform)
 import nme.geom.Point;
 import nme.Vector;
 #end
@@ -13,6 +13,12 @@ import nme.Vector;
 *
 */
 class SxStage extends SxObject{
+    //amount of elements in stage.tileData per tile
+    #if notransform
+        static public inline var DPT = 3;
+    #else
+        static public inline var DPT = 7;
+    #end
 
     //tilesheet to use for rendering
     public var tilesheet (get_tilesheet,never) : SxTilesheet;
@@ -25,7 +31,7 @@ class SxStage extends SxObject{
     public var displayList : Array<SxObject>;
     //tilesheet builder
     public var _tsBuilder : SxTsBuilder;
-    #if flash
+    #if (flash && !notransform)
         public var vtx : Vector<Float>;
         public var idx : Vector<Int>;
         public var uv  : Vector<Float>;
@@ -48,7 +54,7 @@ class SxStage extends SxObject{
         this.displayListSize = 0;
         this.stage           = this;
         this._tsBuilder       = new SxTsBuilder();
-        #if flash
+        #if (flash && !notransform)
             this.uv    = new Vector();
             this.idx   = new Vector();
             this.vtx   = new Vector();
@@ -76,9 +82,13 @@ class SxStage extends SxObject{
 
         gr.clear();
         #if flash
+            #if notransform
+            this.tilesheet.drawTiles(gr, this.tileData, this.smooth, this);
+            #else
             this.tilesheet.drawTiles(gr, this.tileData, this.vtx, this.idx, this.uv, this.smooth);
+            #end
         #else
-            this.tilesheet.drawTiles(gr, this.tileData, this.smooth, Tilesheet.TILE_TRANS_2x2);
+            this.tilesheet.drawTiles(gr, this.tileData, this.smooth #if notransform ); #else , Tilesheet.TILE_TRANS_2x2); #end
         #end
     }//function render()
 
@@ -129,13 +139,13 @@ class SxStage extends SxObject{
 
             //object didn't change and has a tile
             }else if( obj.tile != null ) {
-                tileDataIdx += 7;
+                tileDataIdx += SxStage.DPT;
             }
         }//while()
 
         if( tileDataIdx <= this.tileData.length ){
             this.tileData.splice(tileDataIdx, this.tileData.length - tileDataIdx + 1);
-            #if flash
+            #if (flash && !notransform)
                 this.vtx.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
                 this.idx.splice(Std.int(tileDataIdx / 7) * 6, this.vtx.length - Std.int(tileDataIdx / 7) * 6);
                 this.uv.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
@@ -214,7 +224,7 @@ class SxStage extends SxObject{
             }
         #end
 
-        return this.tilesheet.tiles.get(name);
+        return this.tilesheet._tiles.get(name);
     }//function getTile()
 
 

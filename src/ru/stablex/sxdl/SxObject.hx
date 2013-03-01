@@ -540,30 +540,37 @@ class SxObject extends EventDispatcher{
     * @private
     */
     public function update (tileDataIdx:Int) : Int {
-        this._mx.identity();
 
-        this._mx.scale(this._scaleX, this._scaleY);
-        this._mx.rotate(this._rotation * DEG_TO_RAD);
-        this._mx.translate(this._x, this._y);
-
-        this._mx.concat(this.parent._mx);
+        #if nostransform
+            this._mx.tx = this._x + this.parent._x;
+            this._mx.ty = this._y + this.parent._y;
+        #else
+            this._mx.identity();
+            this._mx.scale(this._scaleX, this._scaleY);
+            this._mx.rotate(this._rotation * DEG_TO_RAD);
+            this._mx.translate(this._x, this._y);
+            this._mx.concat(this.parent._mx);
+        #end
 
         if( this.tile != null ){
-            #if flash
-                var vu : Int = Std.int(tileDataIdx / 7) * 8;
-                var i  : Int = Std.int(tileDataIdx / 7) * 6;
+            #if (flash && !notransform)
+                var vu : Int = Std.int(tileDataIdx / SxStage.DPT) * 8;
+                var i  : Int = Std.int(tileDataIdx / SxStage.DPT) * 6;
             #end
 
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.tx;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.ty;
             this.stage.tileData[ tileDataIdx ++ ] = this.tile.id;
+
+            #if !notransform
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.a;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.c;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.b;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.d;
+            #end
 
             //build arrays for graphics.drawTriangles()
-            #if flash
+            #if (flash && !notransform)
                 var rect = this.stage._tsBuilder._tileData[this.tile.id].rect;
 
                 //tile's center point offset {

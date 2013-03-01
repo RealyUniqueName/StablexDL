@@ -5,7 +5,7 @@ import nme.display.Tilesheet;
 import nme.geom.Point;
 import nme.geom.Rectangle;
 
-#if flash
+#if (flash && !notransform)
 import nme.Vector;
 #end
 
@@ -17,7 +17,7 @@ import nme.Vector;
 class SxTilesheet #if !flash extends Tilesheet #end {
 
     //description
-    public var tiles : Hash<SxTile>;
+    public var _tiles : Hash<SxTile>;
     //tiles counter
     private var _cntTiles : Int = 0;
 
@@ -35,7 +35,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         #else
             super(bmp);
         #end
-        this.tiles = new Hash();
+        this._tiles = new Hash();
     }//function new()
 
 
@@ -44,7 +44,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     *
     */
     public function createTile (name:String, rect:Rectangle, center:Point) : Void {
-        this.tiles.set(name, new SxTile(this._cntTiles, rect.width, rect.height, center.x, center.y));
+        this._tiles.set(name, new SxTile(this._cntTiles, rect.width, rect.height, center.x, center.y));
 
         #if !flash
         this.addTileRect(rect, center);
@@ -56,6 +56,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
 
 #if flash
 
+    #if !notransform
     /**
     * draw tiles
     *
@@ -65,6 +66,34 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         graphics.drawTriangles(vtx, idx, uv);
         graphics.endFill();
     }//function drawTiles()
+
+    #else
+    var screen : BitmapData;
+    var pnt : nme.geom.Point;
+    /**
+    * draw tiles
+    *
+    */
+    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, smooth:Bool = false, stage:SxStage) : Void {
+        if( screen == null ){
+            screen = new BitmapData(nme.Lib.current.stage.stageWidth, nme.Lib.current.stage.stageHeight);
+            pnt = new nme.geom.Point(0, 0);
+        }
+
+        screen.fillRect(screen.rect, 0x00000000);
+        var bmp : BitmapData;
+        for(i in 0...Std.int(dd.length / SxStage.DPT)){
+            bmp = stage._tsBuilder._tileData[ Std.int(dd[i * SxStage.DPT + 2]) ].bmp;
+            pnt.x = dd[i * SxStage.DPT];
+            pnt.y = dd[i * SxStage.DPT + 1];
+            screen.copyPixels(bmp, bmp.rect, pnt, null, null, true);
+        }
+
+        graphics.beginBitmapFill(screen, null, false, smooth);
+        graphics.drawRect(0, 0, screen.width, screen.height);
+        graphics.endFill();
+    }//function drawTiles()
+    #end
 #end
 
 }//class SxTilesheet

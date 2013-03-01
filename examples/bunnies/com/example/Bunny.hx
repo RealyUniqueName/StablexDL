@@ -38,8 +38,8 @@ class Bunny extends SxObject{
         this.aVel *= Math.random() * (Std.random(2) == 0 ? -1 : 1);
         this.sVel *= Math.random() * (Std.random(2) == 0 ? -1 : 1);
 
-        this.x = 400;
-        this.y = 300;
+        this.x = 120;
+        this.y = 160;
         this.rotation = 360 * Math.random();
 
         #if !noscale
@@ -55,10 +55,10 @@ class Bunny extends SxObject{
     override public function update(idx:Int) : Int {
         this.rotation += this.aVel;
 
-        if( this.x > 800 || this.x < 0 ){
+        if( this.x > 640 || this.x < 0 ){
             this.xVel *= -1;
         }
-        if( this.y > 800 || this.y < 0 ){
+        if( this.y > 480 || this.y < 0 ){
             this.yVel *= -1;
         }
         if( Math.abs(this.scaleX) > 1 ){
