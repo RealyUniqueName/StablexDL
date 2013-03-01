@@ -87,7 +87,11 @@ class SxTsBuilder{
 
         //if scaling or clipping is set, create new bitmapData
         if( clipAlpha || scale != 1 ){
-            data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale));//, true, 0x00000000);
+            #if neko
+                data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, {a:0x00, rgb:0x000000});
+            #else
+                data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, 0x00000000);
+            #end
 
             if( scale == 1 ){
                 data.bmp.copyPixels(src, rect, new Point(0, 0));
@@ -217,7 +221,11 @@ class SxTsBuilder{
         //}
 
         //create bitmap for tilesheet{
-            var bmp : BitmapData = new BitmapData(size, size);//, true, 0x00000000);
+            #if neko
+                var bmp : BitmapData = new BitmapData(size, size, true, {a:0x00, rgb:0x000000});
+            #else
+                var bmp : BitmapData = new BitmapData(size, size, true, 0x00000000);
+            #end
             for(data in this._tileData){
                 bmp.copyPixels(data.bmp, data.bmp.rect, new Point(data.pos.x, data.pos.y));
             }
