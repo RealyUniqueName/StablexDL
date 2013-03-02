@@ -133,7 +133,11 @@ class SxTsBuilder{
         }
 
         //build tilesheet bitmap
+        #if (flash && notransform)
+        var bmp : BitmapData = new BitmapData(1, 1);
+        #else
         var bmp : BitmapData = this._packTiles(Math.ceil(Math.sqrt(perfect) / 256) * 256, [[0]], 0);
+        #end
 
         var ts : SxTilesheet = new SxTilesheet(bmp);
 

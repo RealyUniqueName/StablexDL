@@ -2,6 +2,7 @@ package ru.stablex.sxdl;
 
 import nme.display.Graphics;
 import nme.display.Tilesheet;
+import nme.Lib;
 #if (flash && !notransform)
 import nme.geom.Point;
 import nme.Vector;
@@ -31,6 +32,11 @@ class SxStage extends SxObject{
     public var displayList : Array<SxObject>;
     //tilesheet builder
     public var _tsBuilder : SxTsBuilder;
+    //by default = Lib.current.stage.stageWidth. This affects only flash with `notransform` flag
+    public var stageWidth : Int;
+    //by default = Lib.current.stage.stageHeight. This affects only flash with `notransform` flag
+    public var stageHeight : Int;
+
     #if (flash && !notransform)
         public var vtx : Vector<Float>;
         public var idx : Vector<Int>;
@@ -53,7 +59,9 @@ class SxStage extends SxObject{
         this.displayList     = [];
         this.displayListSize = 0;
         this.stage           = this;
-        this._tsBuilder       = new SxTsBuilder();
+        this._tsBuilder      = new SxTsBuilder();
+        this.stageWidth      = Std.int(Lib.current.stage.stageWidth);
+        this.stageHeight     = Std.int(Lib.current.stage.stageHeight);
         #if (flash && !notransform)
             this.uv    = new Vector();
             this.idx   = new Vector();
@@ -83,7 +91,7 @@ class SxStage extends SxObject{
         gr.clear();
         #if flash
             #if notransform
-            this.tilesheet.drawTiles(gr, this.tileData, this.smooth, this);
+            this.tilesheet.drawTiles(gr, this.tileData, this);
             #else
             this.tilesheet.drawTiles(gr, this.tileData, this.vtx, this.idx, this.uv, this.smooth);
             #end

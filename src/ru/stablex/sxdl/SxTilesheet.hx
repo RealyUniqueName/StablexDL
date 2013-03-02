@@ -68,28 +68,31 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     }//function drawTiles()
 
     #else
+
     var screen : BitmapData;
-    var pnt : nme.geom.Point;
+    var pnt    : nme.geom.Point;
+    var bmp    : BitmapData;
+
     /**
     * draw tiles
     *
     */
-    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, smooth:Bool = false, stage:SxStage) : Void {
-        if( screen == null ){
-            screen = new BitmapData(nme.Lib.current.stage.stageWidth, nme.Lib.current.stage.stageHeight);
+    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, stage:SxStage) : Void {
+        if( screen == null || screen.width != stage.stageWidth || screen.height != stage.stageHeight ){
+            screen = new BitmapData(stage.stageWidth, stage.stageHeight);
             pnt = new nme.geom.Point(0, 0);
         }
 
         screen.fillRect(screen.rect, 0x00000000);
-        var bmp : BitmapData;
         for(i in 0...Std.int(dd.length / SxStage.DPT)){
             bmp = stage._tsBuilder._tileData[ Std.int(dd[i * SxStage.DPT + 2]) ].bmp;
             pnt.x = dd[i * SxStage.DPT];
             pnt.y = dd[i * SxStage.DPT + 1];
             screen.copyPixels(bmp, bmp.rect, pnt, null, null, true);
         }
+        bmp = null;
 
-        graphics.beginBitmapFill(screen, null, false, smooth);
+        graphics.beginBitmapFill(screen, null, false, stage.smooth);
         graphics.drawRect(0, 0, screen.width, screen.height);
         graphics.endFill();
     }//function drawTiles()

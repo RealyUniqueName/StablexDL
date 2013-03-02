@@ -55,10 +55,10 @@ class Bunny extends SxObject{
     override public function update(idx:Int) : Int {
         this.rotation += this.aVel;
 
-        if( this.x > 640 || this.x < 0 ){
+        if( this.x > this.stage.stageWidth || this.x < 0 ){
             this.xVel *= -1;
         }
-        if( this.y > 480 || this.y < 0 ){
+        if( this.y > this.stage.stageHeight || this.y < 0 ){
             this.yVel *= -1;
         }
         if( Math.abs(this.scaleX) > 1 ){
