@@ -4,6 +4,7 @@ import nme.events.EventDispatcher;
 import nme.geom.Matrix;
 import nme.errors.ArgumentError;
 import nme.errors.RangeError;
+import nme.geom.Point;
 
 
 /**
@@ -30,6 +31,10 @@ class SxObject extends EventDispatcher{
     //rotation (degrees clockwise)
     public var rotation (get_rotation,set_rotation) : Float;
     private var _rotation : Float = 0;
+    //object's width
+    public var width (get_width,set_width) : Float;
+    //object's height
+    public var height (get_height,set_height) : Float;
     //object's parent
     public var parent (default,null) : SxObject;
     //stage object
@@ -535,6 +540,24 @@ class SxObject extends EventDispatcher{
     }//function swapChildrenAt()
 
 
+    // /**
+    // * Converts the point object from the SxStage (global) coordinates to the display object's (local) coordinates.
+    // *
+    // */
+    // public function globalToLocal (p:Point) : Point {
+    //     return p;
+    // }//function globalToLocal()
+
+
+    // /**
+    // * Converts the point object from the display object's (local) coordinates to the Stage (global) coordinates.
+    // *
+    // */
+    // public function localToGlobal (p:Point) : Point {
+    //     return p;
+    // }//function localToGlobal()
+
+
     /**
     * Update object's tileData
     * @private
@@ -812,4 +835,46 @@ class SxObject extends EventDispatcher{
         }
         return this.displayListSize = displayListSize;
     }//function set_displayListSize
+
+
+    /**
+    * Getter `width`.
+    *
+    */
+    private inline function get_width () : Float {
+        return (this.tile == null ? 0 : this.tile.width * this.scaleX);
+    }//function get_width
+
+
+    /**
+    * Setter `width`.
+    *
+    */
+    private inline function set_width (width:Float) : Float {
+        if( this.tile != null ){
+            this.scaleX = width / this.tile.width;
+        }
+        return width;
+    }//function set_width
+
+
+    /**
+    * Getter `height`.
+    *
+    */
+    private inline function get_height () : Float {
+        return (this.tile == null ? 0 : this.tile.height * this.scaleY);
+    }//function get_height
+
+
+    /**
+    * Setter `height`.
+    *
+    */
+    private inline function set_height (height:Float) : Float {
+        if( this.tile != null ){
+            this.scaleY = height / this.tile.height;
+        }
+        return height;
+    }//function set_height
 }//class SxObject
