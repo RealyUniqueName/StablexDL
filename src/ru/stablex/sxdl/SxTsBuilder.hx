@@ -98,7 +98,8 @@ class SxTsBuilder{
             }else{
                 var mx : Matrix = new Matrix();
                 mx.scale(scale, scale);
-                data.bmp.draw(src, mx);
+                mx.translate(-rect.x * scale, -rect.y * scale);
+                data.bmp.draw(src, mx, null, null, null, smooth);
             }
 
         //use original bitmapData
