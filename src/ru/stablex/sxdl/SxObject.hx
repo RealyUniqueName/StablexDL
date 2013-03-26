@@ -661,6 +661,34 @@ class SxObject extends EventDispatcher{
     }//function update()
 
 
+    /**
+    * Calculate global coordinates of local point
+    *
+    */
+    public function localToGlobal (p:Point) : Point {
+        //if matrix is not calculated
+        if( this.dirty ){
+            var mx : Matrix = new Matrix();
+            var parent : SxObject = this;
+            while( parent != null && !Std.is(p, SxStage) ){
+                mx.identity();
+                #if !notransform
+                    mx.scale(parent._scaleX, parent._scaleY);
+                    mx.rotate(parent._rotation * DEG_TO_RAD);
+                #end
+                mx.translate(parent._x, parent._y);
+                p = mx.transformPoint(p);
+                parent = parent.parent;
+            }
+
+            return p;
+
+        //if matrix is already calculated
+        }else{
+            return this._mx.transformPoint(p);
+        }
+    }//function localToGlobal()
+
 /*******************************************************************************
 *   GETTERS / SETTERS
 *******************************************************************************/
