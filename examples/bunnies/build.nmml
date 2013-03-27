@@ -2,7 +2,8 @@
 <project>
 
     <meta title="StablexDL test" package="com.example.sxdl" version="1.0.0" company="R.U.N" />
-    <app path="./build" file="sxdl" main="com.example.Main" />
+    <app path="./build" file="sxdl" main="com.example.Main" unless="thread"/>
+    <app path="./build/thread" file="sxdl" main="com.example.Main" if="thread"/>
 
     <window width="640" height="480" fps="60"/>
 

@@ -48,6 +48,22 @@ class SxStage extends SxObject{
         public var bottomRight : Point;
     #end
 
+    /**
+    * Threads test
+    */
+    #if (cpp && thread)
+        public var deque : cpp.vm.Deque<Bool>;
+
+        /**
+        * Threading test
+        *
+        */
+        public function thread() : Void {
+            while( this.deque.pop(true) ){
+                this.updateDisplayList();
+            }
+        }//function thread()
+    #end
 
     /**
     * Constructor
@@ -72,6 +88,11 @@ class SxStage extends SxObject{
             this.bottomLeft  = new Point(0, 0);
             this.bottomRight = new Point(0, 0);
         #end
+
+        #if (cpp && thread)
+            cpp.vm.Thread.create(this.thread);
+            this.deque = new cpp.vm.Deque();
+        #end
     }//function new()
 
 
@@ -86,7 +107,11 @@ class SxStage extends SxObject{
             }
         #end
 
-        this.updateDisplayList();
+        #if !(cpp && thread)
+            this.updateDisplayList();
+        #else
+            this.deque.push(true);
+        #end
 
         gr.clear();
         #if flash
@@ -98,6 +123,7 @@ class SxStage extends SxObject{
         #else
             this.tilesheet.drawTiles(gr, this.tileData, this.smooth #if notransform ); #else , Tilesheet.TILE_TRANS_2x2); #end
         #end
+
     }//function render()
 
 
