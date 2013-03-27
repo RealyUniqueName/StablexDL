@@ -90,8 +90,8 @@ class SxStage extends SxObject{
         #end
 
         #if (cpp && thread)
-            cpp.vm.Thread.create(this.thread);
             this.deque = new cpp.vm.Deque();
+            cpp.vm.Thread.create(this.thread);
         #end
     }//function new()
 

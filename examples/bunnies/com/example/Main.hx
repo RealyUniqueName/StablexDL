@@ -46,7 +46,7 @@ class Main extends nme.display.Sprite {
         stage.lockSprites();
 
         //initial bunnies
-        addBunnies(300);
+        addBunnies(1000);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
@@ -55,7 +55,7 @@ class Main extends nme.display.Sprite {
 
         //add bunnies on clicks
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent){
-            addBunnies(100);
+            addBunnies(500);
         });
     }//function main()
 
