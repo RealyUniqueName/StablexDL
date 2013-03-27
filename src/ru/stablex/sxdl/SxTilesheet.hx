@@ -84,10 +84,12 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         }
 
         screen.fillRect(screen.rect, 0x00000000);
+        var tdata;
         for(i in 0...Std.int(dd.length / SxStage.DPT)){
-            bmp = stage._tsBuilder._tileData[ Std.int(dd[i * SxStage.DPT + 2]) ].bmp;
-            pnt.x = dd[i * SxStage.DPT];
-            pnt.y = dd[i * SxStage.DPT + 1];
+            tdata = stage._tsBuilder._tileData[ Std.int(dd[i * SxStage.DPT + 2]) ];
+            bmp = tdata.bmp;
+            pnt.x = dd[i * SxStage.DPT] - tdata.spot.x;
+            pnt.y = dd[i * SxStage.DPT + 1] - tdata.spot.y;
             screen.copyPixels(bmp, bmp.rect, pnt, null, null, true);
         }
         bmp = null;
