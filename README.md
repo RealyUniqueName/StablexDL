@@ -31,4 +31,6 @@ Mobile
 ------------------------------
 
 * Samsung Galaxy Y (single-core 800MHz):  1`400 bunnies @ 28-30fps
-* Asus Nexus 7 (quad-core 1.2GHz):        5`200 bunnies @ 29-30fps, 8`700 bunnies @29-30fps with `thread` flag
+* Asus Nexus 7 (quad-core 1.2GHz):
+    - 5`200 bunnies @ 29-30fps,
+    - 8`700 bunnies @29-30fps with `thread` flag
