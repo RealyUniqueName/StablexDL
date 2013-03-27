@@ -55,7 +55,7 @@ class Main extends nme.display.Sprite {
 
         //add bunnies on clicks
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent){
-            addBunnies(500);
+            addBunnies(100);
         });
     }//function main()
 
