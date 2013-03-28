@@ -23,8 +23,8 @@ With '-notransform' conditional compilation flag:
 
 With 'thread' flag (cpp only):
 
-* 90`000 bunnies @ 57-60fps
-* 210`000 bunnies @ 27-30fps
+* **90`000** bunnies @ 57-60fps
+* **210`000** bunnies @ 27-30fps
 
 
 Mobile
@@ -33,4 +33,7 @@ Mobile
 * Samsung Galaxy Y (single-core 800MHz):  1`400 bunnies @ 28-30fps
 * Asus Nexus 7 (quad-core 1.2GHz):
     - 5`200 bunnies @ 29-30fps
-    - 8`700 bunnies @ 29-30fps with 'thread' flag
+    - **8`700** bunnies @ 29-30fps with 'thread' flag (67% more bunnies with threads)
+* Galaxy Note 2 (quad-core 1.6GHz):
+    - 6`000 bunnies @ 30fps
+    - **13`500** bunnies @ 30fps with 'thread' flag (125% more bunnies with threads)
