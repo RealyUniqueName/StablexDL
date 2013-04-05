@@ -34,8 +34,8 @@ class Main extends nme.display.Sprite {
         cnt   = new TextField();
         cnt.x = Lib.current.stage.stageWidth / 2;
         cnt.mouseEnabled = false;
-        Lib.current.addChild(cnt);
-        Lib.current.addChild(new nme.display.FPS());
+        Lib.current.stage.addChild(cnt);
+        Lib.current.stage.addChild(new nme.display.FPS());
 
         //create stage
         stage = new SxStage();
@@ -46,11 +46,11 @@ class Main extends nme.display.Sprite {
         stage.lockSprites();
 
         //initial bunnies
-        addBunnies(1000);
+        addBunnies(100);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            stage.render(Lib.current);
         });
 
         //add bunnies on clicks

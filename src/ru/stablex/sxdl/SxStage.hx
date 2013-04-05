@@ -1,11 +1,12 @@
 package ru.stablex.sxdl;
 
+import nme.display.BitmapData;
 import nme.display.Graphics;
+import nme.display.Sprite;
 import nme.display.Tilesheet;
 import nme.Lib;
 #if (flash && !notransform)
-import nme.geom.Point;
-import nme.Vector;
+import nme.display.Bitmap;
 #end
 
 
@@ -38,14 +39,7 @@ class SxStage extends SxObject{
     public var stageHeight : Int;
 
     #if (flash && !notransform)
-        public var vtx : Vector<Float>;
-        public var idx : Vector<Int>;
-        public var uv  : Vector<Float>;
-
-        public var topLeft     : Point;
-        public var topRight    : Point;
-        public var bottomLeft  : Point;
-        public var bottomRight : Point;
+        private var _display : Bitmap;
     #end
 
     /**
@@ -79,14 +73,7 @@ class SxStage extends SxObject{
         this.stageWidth      = Std.int(Lib.current.stage.stageWidth);
         this.stageHeight     = Std.int(Lib.current.stage.stageHeight);
         #if (flash && !notransform)
-            this.uv    = new Vector();
-            this.idx   = new Vector();
-            this.vtx   = new Vector();
-
-            this.topLeft     = new Point(0, 0);
-            this.topRight    = new Point(0, 0);
-            this.bottomLeft  = new Point(0, 0);
-            this.bottomRight = new Point(0, 0);
+            this._display = new Bitmap(new BitmapData(this.stageWidth, this.stageHeight));
         #end
 
         #if (cpp && thread)
@@ -100,7 +87,7 @@ class SxStage extends SxObject{
     * Renders frame
     *
     */
-    public function render (gr:Graphics) : Void {
+    public function render (gr:Sprite) : Void {
         #if debug
             if( this._tilesheet == null ){
                 throw "Sprite creation is not finished. stage.lockSprites() was not called.";
@@ -113,15 +100,24 @@ class SxStage extends SxObject{
             this.deque.push(true);
         #end
 
-        gr.clear();
         #if flash
             #if notransform
-            this.tilesheet.drawTiles(gr, this.tileData, this);
+            gr.graphics.clear();
+            this.tilesheet.drawTiles(gr.graphics, this.tileData, this);
             #else
-            this.tilesheet.drawTiles(gr, this.tileData, this.vtx, this.idx, this.uv, this.smooth);
+                if(  this._display.parent != gr ){
+                    if( this._display.parent == null ){
+                        gr.addChild(this._display);
+                    }else{
+                        this._display.parent.removeChild(this._display);
+                        gr.addChild(this._display);
+                    }
+                }
+                this.tilesheet.drawTiles(this._display.bitmapData, this.tileData, this, this.smooth);
             #end
         #else
-            this.tilesheet.drawTiles(gr, this.tileData, this.smooth #if notransform ); #else , Tilesheet.TILE_TRANS_2x2); #end
+            gr.graphics.clear();
+            this.tilesheet.drawTiles(gr.graphics, this.tileData, this.smooth #if notransform ); #else , Tilesheet.TILE_TRANS_2x2); #end
         #end
 
     }//function render()
@@ -179,11 +175,6 @@ class SxStage extends SxObject{
 
         if( tileDataIdx <= this.tileData.length ){
             this.tileData.splice(tileDataIdx, this.tileData.length - tileDataIdx + 1);
-            #if (flash && !notransform)
-                this.vtx.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
-                this.idx.splice(Std.int(tileDataIdx / 7) * 6, this.vtx.length - Std.int(tileDataIdx / 7) * 6);
-                this.uv.splice(Std.int(tileDataIdx / 7) * 8, this.vtx.length - Std.int(tileDataIdx / 7) * 8);
-            #end
         }
 
     }//function updateDisplayList()

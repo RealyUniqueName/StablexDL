@@ -73,7 +73,7 @@ class Main extends nme.display.Sprite {
         //}
 
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            stage.render(Lib.current);
         });
     }//function main()
 

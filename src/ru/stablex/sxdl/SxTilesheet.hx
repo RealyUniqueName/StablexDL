@@ -2,12 +2,10 @@ package ru.stablex.sxdl;
 
 import nme.display.BitmapData;
 import nme.display.Tilesheet;
+import nme.geom.Matrix;
 import nme.geom.Point;
 import nme.geom.Rectangle;
 
-#if (flash && !notransform)
-import nme.Vector;
-#end
 
 
 /**
@@ -22,6 +20,10 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     private var _cntTiles : Int = 0;
 
     #if flash
+        public var pnt : Point;
+        #if !notransform
+            public var mx : Matrix;
+        #end
         public var nmeBitmap : BitmapData;
     #end
 
@@ -32,6 +34,9 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     public function new (bmp:BitmapData) : Void {
         #if flash
             this.nmeBitmap = bmp;
+            #if !notransform
+                this.mx = new Matrix();
+            #end
         #else
             super(bmp);
         #end
@@ -57,20 +62,36 @@ class SxTilesheet #if !flash extends Tilesheet #end {
 #if flash
 
     #if !notransform
+
     /**
     * draw tiles
     *
     */
-    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, vtx:Vector<Float>, idx:Vector<Int>, uv:Vector<Float>, smooth:Bool = false) : Void {
-        graphics.beginBitmapFill(this.nmeBitmap, null, true, smooth);
-        graphics.drawTriangles(vtx, idx, uv);
-        graphics.endFill();
+    public function drawTiles(graphics:nme.display.BitmapData, dd:Array<Float>, stage:SxStage, smooth:Bool = false) : Void {
+
+        graphics.lock();
+        graphics.fillRect(graphics.rect, 0x00000000);
+
+        var tdata;
+        for(i in 0...Std.int(dd.length / SxStage.DPT)){
+            tdata = stage._tsBuilder._tileData[ Std.int(dd[i * SxStage.DPT + 2]) ];
+            mx.tx = dd[i * SxStage.DPT + 0];
+            mx.ty = dd[i * SxStage.DPT + 1];
+            mx.a  = dd[i * SxStage.DPT + 3];
+            mx.c  = dd[i * SxStage.DPT + 4];
+            mx.b  = dd[i * SxStage.DPT + 5];
+            mx.d  = dd[i * SxStage.DPT + 6];
+            pnt = mx.deltaTransformPoint(tdata.spot);
+            mx.translate(-pnt.x, -pnt.y);
+            graphics.draw(tdata.bmp, this.mx, null, null, null, smooth);
+        }
+
+        graphics.unlock();
     }//function drawTiles()
 
     #else
 
     var screen : BitmapData;
-    var pnt    : nme.geom.Point;
     var bmp    : BitmapData;
 
     /**

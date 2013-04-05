@@ -576,11 +576,6 @@ class SxObject extends EventDispatcher{
         #end
 
         if( this.tile != null ){
-            #if (flash && !notransform)
-                var vu : Int = Std.int(tileDataIdx / SxStage.DPT) * 8;
-                var i  : Int = Std.int(tileDataIdx / SxStage.DPT) * 6;
-            #end
-
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.tx;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.ty;
             this.stage.tileData[ tileDataIdx ++ ] = this.tile.id;
@@ -590,70 +585,6 @@ class SxObject extends EventDispatcher{
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.c;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.b;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.d;
-            #end
-
-            //build arrays for graphics.drawTriangles()
-            #if (flash && !notransform)
-                var rect = this.stage._tsBuilder._tileData[this.tile.id].rect;
-
-                //tile's center point offset {
-                    this.stage.topLeft.x = this._mx.tx;
-                    this.stage.topLeft.y = this._mx.ty;
-
-                    var diff = this._mx.transformPoint( this.stage._tsBuilder._tileData[this.tile.id].spot );
-
-                    this.stage.topLeft.x -= diff.x - this._mx.tx;
-                    this.stage.topLeft.y -= diff.y - this._mx.ty;
-                //}
-
-                //result image coordinates
-                    this.stage.topRight.x = rect.width;
-                    this.stage.topRight.y = 0;
-                    this.stage.topRight   = this._mx.transformPoint(this.stage.topRight);
-
-                    this.stage.bottomLeft.x = 0;
-                    this.stage.bottomLeft.y = rect.height;
-                    this.stage.bottomLeft   = this._mx.transformPoint(this.stage.bottomLeft);
-
-                    this.stage.bottomRight.x = rect.width;
-                    this.stage.bottomRight.y = rect.height;
-                    this.stage.bottomRight   = this._mx.transformPoint(this.stage.bottomRight);
-                //}
-
-                //indecies {
-                    var idx : Int = Std.int(vu / 2);
-
-                    this.stage.idx[ i ++ ] = idx;
-                    this.stage.idx[ i ++ ] = idx + 1;
-                    this.stage.idx[ i ++ ] = idx + 2;
-
-                    this.stage.idx[ i ++ ] = idx + 1;
-                    this.stage.idx[ i ++ ] = idx + 2;
-                    this.stage.idx[ i ++ ] = idx + 3;
-                //}
-
-                //Triangle points {
-                    //0
-                    this.stage.uv[ vu ]      = rect.left / this.stage.tilesheet.nmeBitmap.width;
-                    this.stage.uv[ vu + 1 ]  = rect.top / this.stage.tilesheet.nmeBitmap.height;
-                    this.stage.vtx[ vu ]     = this.stage.topLeft.x;
-                    this.stage.vtx[ vu + 1 ] = this.stage.topLeft.y;
-                    //1
-                    this.stage.uv[ vu + 2 ]  = rect.right / this.stage.tilesheet.nmeBitmap.width;
-                    this.stage.uv[ vu + 3 ]  = rect.top / this.stage.tilesheet.nmeBitmap.height;
-                    this.stage.vtx[ vu + 2 ] = this.stage.topRight.x + this.stage.topLeft.x - this._mx.tx;
-                    this.stage.vtx[ vu + 3 ] = this.stage.topRight.y + this.stage.topLeft.y - this._mx.ty;
-                    //2
-                    this.stage.uv[ vu + 4 ]  = rect.left / this.stage.tilesheet.nmeBitmap.width;
-                    this.stage.uv[ vu + 5 ]  = rect.bottom / this.stage.tilesheet.nmeBitmap.height;
-                    this.stage.vtx[ vu + 4 ] = this.stage.bottomLeft.x + this.stage.topLeft.x - this._mx.tx;
-                    this.stage.vtx[ vu + 5 ] = this.stage.bottomLeft.y + this.stage.topLeft.y - this._mx.ty;
-                    //3
-                    this.stage.uv[ vu + 6 ]  = rect.right / this.stage.tilesheet.nmeBitmap.width;
-                    this.stage.uv[ vu + 7 ]  = rect.bottom / this.stage.tilesheet.nmeBitmap.height;
-                    this.stage.vtx[ vu + 6 ] = this.stage.bottomRight.x + this.stage.topLeft.x - this._mx.tx;
-                    this.stage.vtx[ vu + 7 ] = this.stage.bottomRight.y + this.stage.topLeft.y - this._mx.ty;
-                //}
             #end
         }
 

@@ -148,7 +148,7 @@ class SxTsBuilder{
             #if (flash && !notransform)
                 data.rect = new Rectangle(data.pos.x, data.pos.y, data.bmp.width, data.bmp.height);
             #end
-            #if !(flash && notransform)
+            #if !flash
             data.bmp = null;
             #end
         }
