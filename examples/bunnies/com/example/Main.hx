@@ -19,8 +19,8 @@ import ru.stablex.sxdl.SxStage;
 */
 class Main extends nme.display.Sprite {
 
-    //stage instance
-    static public var stage : SxStage;
+    //sxStage instance
+    static public var sxStage : SxStage;
     //bunny counter
     static public var cnt : TextField;
 
@@ -37,20 +37,20 @@ class Main extends nme.display.Sprite {
         Lib.current.addChild(cnt);
         Lib.current.addChild(new nme.display.FPS());
 
-        //create stage
-        stage = new SxStage();
-        // stage.smooth = true;
+        //create sxStage
+        sxStage = new SxStage();
+        // sxStage.smooth = true;
 
         //create tilesheet
-        stage.addSprite("assets/bunny.png");
-        stage.lockSprites();
+        sxStage.addSprite("assets/bunny.png");
+        sxStage.lockSprites();
 
         //initial bunnies
         addBunnies(1000);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            sxStage.render(Lib.current.graphics);
         });
 
         //add bunnies on clicks
@@ -61,18 +61,18 @@ class Main extends nme.display.Sprite {
 
 
     /**
-    * Add bunnies to stage
+    * Add bunnies to sxStage
     *
     */
     static public function addBunnies(amount:Int) : Void {
         for(i in 0...amount){
-            // stage.addChild(new Bunny());
+            // sxStage.addChild(new Bunny());
             var bunny = new Bunny();
-            bunny.tile = stage.getTile("assets/bunny.png");
-            stage.addChild(bunny);
+            bunny.tile = sxStage.getTile("assets/bunny.png");
+            sxStage.addChild(bunny);
         }
 
-        cnt.text = Std.string( stage.numChildren );
+        cnt.text = Std.string( sxStage.numChildren );
     }//function addBunnies()
 
 

@@ -5,6 +5,10 @@ import nme.display.Tilesheet;
 import nme.geom.Point;
 import nme.geom.Rectangle;
 
+#if haxe3
+private typedef Hash<T> = Map<String,T>;
+#end
+
 #if (flash && !notransform)
 import nme.Vector;
 #end

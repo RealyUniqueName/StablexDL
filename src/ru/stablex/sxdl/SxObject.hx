@@ -6,6 +6,9 @@ import nme.errors.ArgumentError;
 import nme.errors.RangeError;
 import nme.geom.Point;
 
+#if haxe3
+private typedef Hash<T> = Map<String,T>;
+#end
 
 /**
 * Base DisplayObject class.
@@ -14,7 +17,7 @@ import nme.geom.Point;
 class SxObject extends EventDispatcher{
     static private inline var EXCEPTION_NOT_CHILD = 'Object does not contain this child';
     static private inline var EXCEPTION_RANGE_ERR = 'Index out of range';
-    static public inline var DEG_TO_RAD = Math.PI / 180;
+    static public inline function DEG_TO_RAD() return Math.PI / 180 #if haxe3 ; #end
 
     //x coordinate
     public var x (get_x,set_x) : Float;
@@ -570,7 +573,7 @@ class SxObject extends EventDispatcher{
         #else
             this._mx.identity();
             this._mx.scale(this._scaleX, this._scaleY);
-            this._mx.rotate(this._rotation * DEG_TO_RAD);
+            this._mx.rotate(this._rotation * DEG_TO_RAD());
             this._mx.translate(this._x, this._y);
             this._mx.concat(this.parent._mx);
         #end
@@ -674,7 +677,7 @@ class SxObject extends EventDispatcher{
                 mx.identity();
                 #if !notransform
                     mx.scale(parent._scaleX, parent._scaleY);
-                    mx.rotate(parent._rotation * DEG_TO_RAD);
+                    mx.rotate(parent._rotation * DEG_TO_RAD());
                 #end
                 mx.translate(parent._x, parent._y);
                 p = mx.transformPoint(p);

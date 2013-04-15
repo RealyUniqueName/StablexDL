@@ -7,6 +7,9 @@ import nme.geom.Rectangle;
 import nme.geom.Point;
 import nme.display.BitmapData;
 
+#if haxe3
+private typedef Hash<T> = Map<String,T>;
+#end
 
 /**
 * Tilesheet builder
@@ -78,7 +81,7 @@ class SxTsBuilder{
         if( spotX == null ) spotX = src.width / 2;
         if( spotY == null ) spotY = src.height / 2;
 
-        #if neko
+        #if (neko && !haxe3)
         var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect({a:0xFF, rgb:0x000000}, {a:0x00, rgb:0x000000}, false) : src.rect);
         #else
         var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect(0xFF000000, 0x00000000, false) : src.rect);
@@ -87,7 +90,7 @@ class SxTsBuilder{
 
         //if scaling or clipping is set, create new bitmapData
         if( clipAlpha || scale != 1 ){
-            #if neko
+            #if (neko && !haxe3)
                 data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, {a:0x00, rgb:0x000000});
             #else
                 data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, 0x00000000);
@@ -231,7 +234,7 @@ class SxTsBuilder{
         //}
 
         //create bitmap for tilesheet{
-            #if neko
+            #if (neko && !haxe3)
                 var bmp : BitmapData = new BitmapData(size, size, true, {a:0x00, rgb:0x000000});
             #else
                 var bmp : BitmapData = new BitmapData(size, size, true, 0x00000000);
