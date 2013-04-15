@@ -3,7 +3,9 @@
 
     <meta title="StablexDL test" package="com.example.sxdl" version="1.0.0" company="R.U.N" />
     <app path="./build" file="sxdl" main="com.example.Main" />
-
+	<app path="./build/thread" file="sxdl" main="com.example.Main" if="thread"/>
+    <app path="./build/notransform" file="sxdl" main="com.example.Main" if="notransform"/>
+	
     <window width="0" height="0" fps="60"/>
 
     <!-- set name="SWF_VERSION" value="11" if="flash" / -->

@@ -3,7 +3,9 @@
 
     <meta title="StablexDL test" package="com.example.sxdl" version="1.0.0" company="R.U.N" />
     <app path="./build" file="sxdl" main="com.example.Main" unless="thread"/>
-    <app path="./build/thread" file="sxdl" main="com.example.Main" if="thread"/>
+    <app path="./build" file="sxdl_thread" main="com.example.Main" if="thread"/>
+    <app path="./build" file="sxdl_noscale" main="com.example.Main" if="noscale"/>
+    <app path="./build" file="sxdl_notransform" main="com.example.Main" if="notransform"/>
 
     <window width="640" height="480" fps="61"/>
 
