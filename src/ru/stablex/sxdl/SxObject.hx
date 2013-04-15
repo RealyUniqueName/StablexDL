@@ -16,9 +16,11 @@ class SxObject extends EventDispatcher{
     static private inline var EXCEPTION_RANGE_ERR = 'Index out of range';
 	
 	#if haxe3
-		static public var DEG_TO_RAD = Math.PI / 180;
+		static inline function DEG_TO_RAD() {
+			return Math.PI / 180;
+		}
 	#else
-		static public inline var DEG_TO_RAD = Math.PI / 180;
+		static public inline var  = Math.PI / 180;
 	#end
 
     //x coordinate
@@ -583,7 +585,7 @@ class SxObject extends EventDispatcher{
         #else
             this._mx.identity();
             this._mx.scale(this._scaleX, this._scaleY);
-            this._mx.rotate(this._rotation * DEG_TO_RAD);
+            this._mx.rotate(this._rotation * DEG_TO_RAD());
             this._mx.translate(this._x, this._y);
             this._mx.concat(this.parent._mx);
         #end
@@ -687,7 +689,7 @@ class SxObject extends EventDispatcher{
                 mx.identity();
                 #if !notransform
                     mx.scale(parent._scaleX, parent._scaleY);
-                    mx.rotate(parent._rotation * DEG_TO_RAD);
+                    mx.rotate(parent._rotation * DEG_TO_RAD());
                 #end
                 mx.translate(parent._x, parent._y);
                 p = mx.transformPoint(p);
