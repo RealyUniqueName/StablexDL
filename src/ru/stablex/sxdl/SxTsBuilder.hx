@@ -17,7 +17,12 @@ class SxTsBuilder{
     static public var CELL_SIZE : Int = 8;
 
     //list of registered tiles
-    public var tiles : Hash<SxTile>;
+	#if haxe3
+		public var tiles : Map<String,SxTile>;
+	#else
+		public var tiles : Hash<SxTile>;
+	#end
+	
     public var _tileData : Array<TileData>;
     //tile counter
     public var cntTiles : Int = 0;
@@ -47,7 +52,12 @@ class SxTsBuilder{
     *
     */
     public function new () : Void {
-        this.tiles  = new Hash();
+		#if haxe3
+			this.tiles  = new Map<String, SxTile>();
+		#else
+			this.tiles  = new Hash();
+		#end
+		
         this._tileData = [];
     }//function new()
 
@@ -78,16 +88,16 @@ class SxTsBuilder{
         if( spotX == null ) spotX = src.width / 2;
         if( spotY == null ) spotY = src.height / 2;
 
-        #if neko
-        var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect({a:0xFF, rgb:0x000000}, {a:0x00, rgb:0x000000}, false) : src.rect);
+        #if (neko && !haxe3)
+			var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect({a:0xFF, rgb:0x000000}, {a:0x00, rgb:0x000000}, false) : src.rect);
         #else
-        var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect(0xFF000000, 0x00000000, false) : src.rect);
-        #end
+			var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect(0xFF000000, 0x00000000, false) : src.rect);
+        #end		
         data.spot = (sourceSizeForSpot ? new Point( (spotX - rect.x) * scale, (spotY - rect.y) * scale ) : new Point(spotX * scale, spotY * scale));
 
         //if scaling or clipping is set, create new bitmapData
         if( clipAlpha || scale != 1 ){
-            #if neko
+            #if (neko && !haxe3)
                 data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, {a:0x00, rgb:0x000000});
             #else
                 data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, 0x00000000);
@@ -231,7 +241,7 @@ class SxTsBuilder{
         //}
 
         //create bitmap for tilesheet{
-            #if neko
+            #if (neko && !haxe3)
                 var bmp : BitmapData = new BitmapData(size, size, true, {a:0x00, rgb:0x000000});
             #else
                 var bmp : BitmapData = new BitmapData(size, size, true, 0x00000000);

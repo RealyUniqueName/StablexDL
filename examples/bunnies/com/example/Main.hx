@@ -20,7 +20,7 @@ import ru.stablex.sxdl.SxStage;
 class Main extends nme.display.Sprite {
 
     //stage instance
-    static public var stage : SxStage;
+    static public var stage2 : SxStage;
     //bunny counter
     static public var cnt : TextField;
 
@@ -38,19 +38,19 @@ class Main extends nme.display.Sprite {
         Lib.current.addChild(new nme.display.FPS());
 
         //create stage
-        stage = new SxStage();
+        stage2 = new SxStage();
         // stage.smooth = true;
 
         //create tilesheet
-        stage.addSprite("assets/bunny.png");
-        stage.lockSprites();
+        stage2.addSprite("assets/bunny.png");
+        stage2.lockSprites();
 
         //initial bunnies
-        addBunnies(1000);
+        addBunnies(100);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            stage2.render(Lib.current.graphics);
         });
 
         //add bunnies on clicks
@@ -68,11 +68,11 @@ class Main extends nme.display.Sprite {
         for(i in 0...amount){
             // stage.addChild(new Bunny());
             var bunny = new Bunny();
-            bunny.tile = stage.getTile("assets/bunny.png");
-            stage.addChild(bunny);
+            bunny.tile = stage2.getTile("assets/bunny.png");
+            stage2.addChild(bunny);
         }
 
-        cnt.text = Std.string( stage.numChildren );
+        cnt.text = Std.string( stage2.numChildren );
     }//function addBunnies()
 
 

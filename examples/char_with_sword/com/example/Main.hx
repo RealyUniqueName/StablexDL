@@ -23,39 +23,39 @@ class Main extends nme.display.Sprite {
     */
     static public function main () : Void {
         //create stage
-        var stage : SxStage = new SxStage();
-        stage.smooth = true;
+        var stage2 : SxStage = new SxStage();
+        stage2.smooth = true;
 
-        stage.addSprite("char", "assets/char.png");
-        stage.addSprite("assets/sword.png", null, 1, -24.5, 117);
-        stage.lockSprites();
+        stage2.addSprite("char", "assets/char.png");
+        stage2.addSprite("assets/sword.png", null, 1, -24.5, 117);
+        stage2.lockSprites();
 
         //rotating char with sword {
             var char : TweenObject = new TweenObject();
-            char.tile = stage.getTile("char");
+            char.tile = stage2.getTile("char");
             char.x    = 200;
             char.y    = 300;
 
             var sword : SxObject = new SxObject();
-            sword.tile = stage.getTile("assets/sword.png");
+            sword.tile = stage2.getTile("assets/sword.png");
 
             char.addChild(sword);
-            stage.addChild(char);
+            stage2.addChild(char);
 
             char.tween(10, {rotation:360});
         //}
 
         //running char rotating sword{
             var char : TweenObject = new TweenObject();
-            char.tile = stage.getTile("char");
+            char.tile = stage2.getTile("char");
             char.x    = 500;
             char.y    = 300;
 
             var sword : TweenObject = new TweenObject();
-            sword.tile = stage.getTile("assets/sword.png");
+            sword.tile = stage2.getTile("assets/sword.png");
 
             char.addChild(sword);
-            stage.addChild(char);
+            stage2.addChild(char);
 
             var forward  : Void->Void = null;
             var backward : Void->Void = null;
@@ -73,7 +73,7 @@ class Main extends nme.display.Sprite {
         //}
 
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            stage2.render(Lib.current.graphics);
         });
     }//function main()
 
