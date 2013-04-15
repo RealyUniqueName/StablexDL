@@ -2,10 +2,13 @@
 <project>
 
     <meta title="StablexDL test" package="com.example.sxdl" version="1.0.0" company="R.U.N" />
-    <app path="./build" file="sxdl" main="com.example.Main" unless="thread"/>
-    <app path="./build" file="sxdl_thread" main="com.example.Main" if="thread"/>
-    <app path="./build" file="sxdl_noscale" main="com.example.Main" if="noscale"/>
-    <app path="./build" file="sxdl_notransform" main="com.example.Main" if="notransform"/>
+    <app path="./build" file="sxdl" main="com.example.Main" unless="thread"/>	
+	<app path="./build/thread" file="sxdl" main="com.example.Main" if="thread" unless="flash"/>
+    <app path="./build/noscale" file="sxdl" main="com.example.Main" if="noscale" unless="flash"/>
+    <app path="./build/notransform" file="sxdl" main="com.example.Main" if="notransform" unless="flash"/>
+	<app path="./build" file="sxdl_thread" main="com.example.Main" if="thread flash"/>
+    <app path="./build" file="sxdl_noscale" main="com.example.Main" if="noscale flash"/>
+    <app path="./build" file="sxdl_notransform" main="com.example.Main" if="notransform flash"/>
 
     <window width="640" height="480" fps="61"/>
 

@@ -4,7 +4,8 @@
     <meta title="StablexDL test" package="com.example.sxdl" version="1.0.0" company="R.U.N" />
     <app path="./build" file="sxdl" main="com.example.Main" />
 	<app path="./build/thread" file="sxdl" main="com.example.Main" if="thread"/>
-    <app path="./build/notransform" file="sxdl" main="com.example.Main" if="notransform"/>
+    <app path="./build/notransform" file="sxdl" main="com.example.Main" if="notransform" />
+    <app path="./build" file="sxdl_notransform" main="com.example.Main" if="notransform flash" />
 	
     <window width="0" height="0" fps="60"/>
 
