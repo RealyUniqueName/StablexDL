@@ -21,7 +21,7 @@ import ru.stablex.sxdl.SxObject;
 class Main extends nme.display.Sprite {
 
     //stage instance
-    static public var stage : SxStage;
+    static public var stage2 : SxStage;
     //bunny counter
     static public var cnt : TextField;
 
@@ -39,23 +39,23 @@ class Main extends nme.display.Sprite {
         Lib.current.addChild(new nme.display.FPS());
 
         //create stage
-        stage = new SxStage();
-        stage.smooth = true;
+        stage2 = new SxStage();
+        stage2.smooth = true;
 
         //create tilesheet
-        stage.addSprite("assets/bunny.png");
-        stage.lockSprites();
+        stage2.addSprite("assets/bunny.png");
+        stage2.lockSprites();
 
         //root object
         var root : SxObject = new SxObject();
-        stage.addChild(root);
+        stage2.addChild(root);
 
         //initial bunnies
         addBunnies(300);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
-            stage.render(Lib.current.graphics);
+            stage2.render(Lib.current.graphics);
             root.rotation ++;
         });
 
@@ -77,11 +77,11 @@ class Main extends nme.display.Sprite {
         //     bunny.tile = stage.getTile("assets/bunny.png");
         //     stage.addChild(bunny);
         // }
-        var root = stage.getChildAt(0);
-        root.x = stage.stageWidth / 2;
-        root.y = stage.stageHeight / 2;
+        var root = stage2.getChildAt(0);
+        root.x = stage2.stageWidth / 2;
+        root.y = stage2.stageHeight / 2;
 
-        var tile = stage.getTile("assets/bunny.png");
+        var tile = stage2.getTile("assets/bunny.png");
 
         var cells = Std.int(Math.sqrt(root.numChildren + amount));
         var x : Float = - cells / 2 * tile.width + 3;

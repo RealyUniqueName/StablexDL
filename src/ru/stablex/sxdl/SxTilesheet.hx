@@ -17,7 +17,12 @@ import nme.Vector;
 class SxTilesheet #if !flash extends Tilesheet #end {
 
     //description
-    public var _tiles : Map<String,SxTile>;
+	#if haxe3
+		public var _tiles : Map<String,SxTile>;
+	#else
+		public var _tiles : Hash<SxTile>;
+	#end
+	
     //tiles counter
     private var _cntTiles : Int = 0;
 
@@ -35,7 +40,12 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         #else
             super(bmp);
         #end
-        this._tiles = new Map();
+		
+		#if haxe3
+			this._tiles = new Map<String,SxTile>();
+		#else
+			this._tiles = new Hash();
+		#end
     }//function new()
 
 
