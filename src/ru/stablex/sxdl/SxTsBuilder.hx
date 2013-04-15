@@ -17,7 +17,7 @@ class SxTsBuilder{
     static public var CELL_SIZE : Int = 8;
 
     //list of registered tiles
-    public var tiles : Hash<SxTile>;
+    public var tiles : Map<String,SxTile>;
     public var _tileData : Array<TileData>;
     //tile counter
     public var cntTiles : Int = 0;
@@ -47,7 +47,7 @@ class SxTsBuilder{
     *
     */
     public function new () : Void {
-        this.tiles  = new Hash();
+        this.tiles  = new Map();
         this._tileData = [];
     }//function new()
 

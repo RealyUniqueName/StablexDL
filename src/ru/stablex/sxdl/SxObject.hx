@@ -14,7 +14,7 @@ import nme.geom.Point;
 class SxObject extends EventDispatcher{
     static private inline var EXCEPTION_NOT_CHILD = 'Object does not contain this child';
     static private inline var EXCEPTION_RANGE_ERR = 'Index out of range';
-    static public inline var DEG_TO_RAD = Math.PI / 180;
+    static public var DEG_TO_RAD = Math.PI / 180;
 
     //x coordinate
     public var x (get_x,set_x) : Float;
@@ -48,7 +48,8 @@ class SxObject extends EventDispatcher{
     //tile data
     public var tile (default,set_tile) : SxTile;
     //registered event listeners
-    private var _listeners : Hash<List<Dynamic->Void>>;
+    //private var _listeners : Hash<List<Dynamic->Void>>;
+	private var _listeners : Map<String, List<Dynamic->Void>>;
     //index of first element in _tileData for this object
     public var _tileDataIdx : Int;
     //combined matrix to calculate real x, y, rotation etc.
@@ -84,7 +85,7 @@ class SxObject extends EventDispatcher{
     override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
         //if listeners list is not created
         if( this._listeners == null ){
-            this._listeners = new Hash();
+            this._listeners = new Map();
         }
 
         var listeners : List<Dynamic->Void> = this._listeners.get(type);
