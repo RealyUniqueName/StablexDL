@@ -37,3 +37,6 @@ Mobile
 * Galaxy Note 2 (quad-core 1.6GHz):
     - 6`000 bunnies @ 30fps
     - **13`500** bunnies @ 30fps with 'thread' flag (125% more bunnies with threads)
+
+
+MIT License
