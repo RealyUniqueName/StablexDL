@@ -1,18 +1,17 @@
 package ru.stablex.sxdl;
 
-import nme.display.BitmapData;
-import nme.display.Tilesheet;
-import nme.geom.Point;
-import nme.geom.Rectangle;
+import flash.display.BitmapData;
+import openfl.display.Tilesheet;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+
+#if (flash && !notransform)
+import flash.Vector;
+#end
 
 #if haxe3
 private typedef Hash<T> = Map<String,T>;
 #end
-
-#if (flash && !notransform)
-import nme.Vector;
-#end
-
 
 /**
 * Tilesheet
@@ -65,7 +64,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     * draw tiles
     *
     */
-    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, vtx:Vector<Float>, idx:Vector<Int>, uv:Vector<Float>, smooth:Bool = false) : Void {
+    public function drawTiles(graphics:flash.display.Graphics, dd:Array<Float>, vtx:Vector<Float>, idx:Vector<Int>, uv:Vector<Float>, smooth:Bool = false) : Void {
         graphics.beginBitmapFill(this.nmeBitmap, null, true, smooth);
         graphics.drawTriangles(vtx, idx, uv);
         graphics.endFill();
