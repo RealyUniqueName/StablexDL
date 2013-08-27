@@ -1,11 +1,11 @@
 package ru.stablex.sxdl;
 
-import nme.display.Graphics;
-import nme.display.Tilesheet;
-import nme.Lib;
+import flash.display.Graphics;
+import openfl.display.Tilesheet;
+import flash.Lib;
 #if (flash && !notransform)
-import nme.geom.Point;
-import nme.Vector;
+import flash.geom.Point;
+import flash.Vector;
 #end
 
 
@@ -16,9 +16,9 @@ import nme.Vector;
 class SxStage extends SxObject{
     //amount of elements in stage.tileData per tile
     #if notransform
-        static public inline var DPT = 3;
+        static public inline var DPT = 3+1;
     #else
-        static public inline var DPT = 7;
+        static public inline var DPT = 7+1;
     #end
 
     //tilesheet to use for rendering
@@ -121,7 +121,8 @@ class SxStage extends SxObject{
             this.tilesheet.drawTiles(gr, this.tileData, this.vtx, this.idx, this.uv, this.smooth);
             #end
         #else
-            this.tilesheet.drawTiles(gr, this.tileData, this.smooth #if notransform ); #else , Tilesheet.TILE_TRANS_2x2); #end
+            this.tilesheet.drawTiles(gr, this.tileData, this.smooth, Tilesheet.TILE_ALPHA #if !notransform | Tilesheet.TILE_TRANS_2x2 #end);
+			
         #end
 
     }//function render()

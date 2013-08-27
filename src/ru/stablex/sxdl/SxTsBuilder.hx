@@ -1,11 +1,11 @@
 package ru.stablex.sxdl;
 
-import nme.Assets;
-import nme.display.Tilesheet;
-import nme.geom.Matrix;
-import nme.geom.Rectangle;
-import nme.geom.Point;
-import nme.display.BitmapData;
+import openfl.Assets;
+import openfl.display.Tilesheet;
+import flash.geom.Matrix;
+import flash.geom.Rectangle;
+import flash.geom.Point;
+import flash.display.BitmapData;
 
 #if haxe3
 private typedef Hash<T> = Map<String,T>;

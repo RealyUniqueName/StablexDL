@@ -1,10 +1,10 @@
 package ru.stablex.sxdl;
 
-import nme.events.EventDispatcher;
-import nme.geom.Matrix;
-import nme.errors.ArgumentError;
-import nme.errors.RangeError;
-import nme.geom.Point;
+import flash.events.EventDispatcher;
+import flash.geom.Matrix;
+import flash.errors.ArgumentError;
+import flash.errors.RangeError;
+import flash.geom.Point;
 
 #if haxe3
 private typedef Hash<T> = Map<String,T>;
@@ -68,6 +68,8 @@ class SxObject extends EventDispatcher{
     //index of last [grand-[grand-...]]-child in displayList of stage
     public var displayListLastIdx : Int = -1;
 
+	public var alpha(get, set):Float;
+	private var _alpha:Float = 1;
 
 
     /**
@@ -594,6 +596,8 @@ class SxObject extends EventDispatcher{
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.b;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.d;
             #end
+			
+			this.stage.tileData[ tileDataIdx ++ ] = this._alpha;
 
             //build arrays for graphics.drawTriangles()
             #if (flash && !notransform)
@@ -724,6 +728,14 @@ class SxObject extends EventDispatcher{
     }//function set_x
 
 
+	private inline function set_alpha (alpha:Float) : Float {
+        return this._alpha = alpha;
+    }
+	
+	private inline function get_alpha () : Float {
+        return this._alpha;
+    }
+	
     /**
     * Getter `y`.
     *
