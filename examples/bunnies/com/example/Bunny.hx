@@ -65,6 +65,8 @@ class Bunny extends SxObject{
             this.sVel *= -1;
         }
 
+        this.alpha = Math.cos(this.rotation);
+
         this.x += this.xVel;
         this.y += this.yVel;
 

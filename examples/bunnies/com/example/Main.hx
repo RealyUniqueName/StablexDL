@@ -1,10 +1,11 @@
 package com.example;
 
-import nme.Assets;
-import nme.events.Event;
-import nme.events.MouseEvent;
-import nme.Lib;
-import nme.text.TextField;
+import flash.display.Sprite;
+import openfl.Assets;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.Lib;
+import flash.text.TextField;
 import ru.stablex.sxdl.SxStage;
 
 /*******************************************************************************
@@ -17,7 +18,7 @@ import ru.stablex.sxdl.SxStage;
 * StablexDL test
 *
 */
-class Main extends nme.display.Sprite {
+class Main extends Sprite {
 
     //sxStage instance
     static public var sxStage : SxStage;
@@ -35,7 +36,7 @@ class Main extends nme.display.Sprite {
         cnt.x = Lib.current.stage.stageWidth / 2;
         cnt.mouseEnabled = false;
         Lib.current.addChild(cnt);
-        Lib.current.addChild(new nme.display.FPS());
+        Lib.current.addChild(new openfl.display.FPS());
 
         //create sxStage
         sxStage = new SxStage();
@@ -46,7 +47,7 @@ class Main extends nme.display.Sprite {
         sxStage.lockSprites();
 
         //initial bunnies
-        addBunnies(1000);
+        addBunnies(#if flash 100 #else 1000 #end);
 
         //render on every frame
         Lib.current.addEventListener(Event.ENTER_FRAME, function(e:Event){
