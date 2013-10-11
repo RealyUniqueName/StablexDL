@@ -26,6 +26,8 @@ class SxTsBuilder{
     public var cntTiles : Int = 0;
     //description
     public var locked (default,null) : Bool = false;
+    /** sequences of frames (animations) */
+    private var _sequences : Map<String, Array<String>>;
 
 
     /**
@@ -50,8 +52,9 @@ class SxTsBuilder{
     *
     */
     public function new () : Void {
-        this.tiles  = new Hash();
-        this._tileData = [];
+        this._sequences = new Map();
+        this.tiles      = new Hash();
+        this._tileData  = [];
     }//function new()
 
 
@@ -81,20 +84,12 @@ class SxTsBuilder{
         if( spotX == null ) spotX = src.width / 2;
         if( spotY == null ) spotY = src.height / 2;
 
-        #if (neko && !haxe3)
-        var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect({a:0xFF, rgb:0x000000}, {a:0x00, rgb:0x000000}, false) : src.rect);
-        #else
         var rect : Rectangle = (clipAlpha ? src.getColorBoundsRect(0xFF000000, 0x00000000, false) : src.rect);
-        #end
         data.spot = (sourceSizeForSpot ? new Point( (spotX - rect.x) * scale, (spotY - rect.y) * scale ) : new Point(spotX * scale, spotY * scale));
 
         //if scaling or clipping is set, create new bitmapData
         if( clipAlpha || scale != 1 ){
-            #if (neko && !haxe3)
-                data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, {a:0x00, rgb:0x000000});
-            #else
-                data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, 0x00000000);
-            #end
+            data.bmp = new BitmapData(Math.ceil(rect.width * scale), Math.ceil(rect.height * scale), true, 0x00000000);
 
             if( scale == 1 ){
                 data.bmp.copyPixels(src, rect, new Point(0, 0));
@@ -112,6 +107,41 @@ class SxTsBuilder{
 
         this._tileData.push(data);
     }//function addSprite()
+
+
+    /**
+    * Description
+    *
+    */
+    public function addAnimation (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
+        var src  : BitmapData = (
+            bmp != null
+                ? (Std.is(bmp, BitmapData) ? bmp : Assets.getBitmapData(Std.string(bmp), false))
+                : Assets.getBitmapData(name, false)
+        );
+
+        var wframes : Int = Std.int(src.width / frameWidth);
+        var hframes : Int = Std.int(src.height / frameHeight);
+
+        var n        : Int = 0;
+        var frame    : BitmapData;
+        var rect     : Rectangle = new Rectangle(0, 0, frameWidth, frameHeight);
+        var pnt      : Point = new Point(0, 0);
+        var sequence : Array<String> = [];
+        for(w in 0...wframes){
+            rect.x = w * frameWidth;
+            for(h in 0...hframes){
+                rect.y = h * frameWidth;
+                frame = new BitmapData(frameWidth, frameHeight, true, 0x00000000);
+                frame.copyPixels(src, rect, pnt);
+                this.addSprite(name + '_sequence_' + n, frame, scale, spotX, spotY, false, true, smooth);
+                sequence.push(name + '_sequence_' + n);
+                n++;
+            }
+        }
+
+        this._sequences.set(name, sequence);
+    }//function addAnimation()
 
 
     /**
@@ -154,6 +184,18 @@ class SxTsBuilder{
             #if !(flash && notransform)
             data.bmp = null;
             #end
+        }
+
+        //set animations
+        var frames : Array<String>;
+        var tiles : Array<SxTile>;
+        for(seq in this._sequences.keys()){
+            frames = this._sequences.get(seq);
+            tiles  = [];
+            for(i in 0...frames.length){
+                tiles.push(ts._tiles.get(frames[i]));
+            }
+            ts.animations.set(seq, tiles);
         }
 
         return ts;

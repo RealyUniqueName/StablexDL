@@ -23,6 +23,8 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     public var _tiles : Hash<SxTile>;
     //tiles counter
     private var _cntTiles : Int = 0;
+    /** description */
+    public var animations : Map<String, Array<SxTile>>;
 
     #if flash
         public var nmeBitmap : BitmapData;
@@ -38,7 +40,8 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         #else
             super(bmp);
         #end
-        this._tiles = new Hash();
+        this._tiles      = new Hash();
+        this.animations = new Map();
     }//function new()
 
 
@@ -73,17 +76,17 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     #else
 
     var screen : BitmapData;
-    var pnt    : nme.geom.Point;
+    var pnt    : Point;
     var bmp    : BitmapData;
 
     /**
     * draw tiles
     *
     */
-    public function drawTiles(graphics:nme.display.Graphics, dd:Array<Float>, stage:SxStage) : Void {
+    public function drawTiles(graphics:flash.display.Graphics, dd:Array<Float>, stage:SxStage) : Void {
         if( screen == null || screen.width != stage.stageWidth || screen.height != stage.stageHeight ){
             screen = new BitmapData(stage.stageWidth, stage.stageHeight);
-            pnt = new nme.geom.Point(0, 0);
+            pnt = new Point(0, 0);
         }
 
         screen.fillRect(screen.rect, 0x00000000);

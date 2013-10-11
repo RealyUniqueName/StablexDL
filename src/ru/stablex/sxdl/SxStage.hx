@@ -6,6 +6,7 @@ import flash.Lib;
 #if (flash && !notransform)
 import flash.geom.Point;
 import flash.Vector;
+import ru.stablex.sxdl.SxTile;
 #end
 
 
@@ -122,7 +123,7 @@ class SxStage extends SxObject{
             #end
         #else
             this.tilesheet.drawTiles(gr, this.tileData, this.smooth, Tilesheet.TILE_ALPHA #if !notransform | Tilesheet.TILE_TRANS_2x2 #end);
-			
+
         #end
 
     }//function render()
@@ -237,6 +238,19 @@ class SxStage extends SxObject{
 
 
     /**
+    * Description
+    *
+    */
+    public function addAnimation (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
+        if( this._tilesheet != null ){
+            throw "Can't add new sprites after stage.lockSprites() was called.";
+        }
+
+        this._tsBuilder.addAnimation(name, bmp, frameWidth, frameHeight, scale, spotX, spotY, smooth);
+    }//function addAnimation()
+
+
+    /**
     * Build tilesheet. You can't add any new sprites after this method was invoked.
     *
     */
@@ -262,6 +276,15 @@ class SxStage extends SxObject{
         return this.tilesheet._tiles.get(name);
     }//function getTile()
 
+
+    /**
+    * Get sequence of tiles
+    *
+    */
+    public function getAnimation (name:String) : Null<Array<SxTile>> {
+        var tiles = this.tilesheet.animations.get(name);
+        return (tiles == null ? null : tiles.copy());
+    }//function getAnimation()
 
 /*******************************************************************************
 *   GETTERS / SETTERS
