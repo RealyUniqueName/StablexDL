@@ -113,7 +113,7 @@ class SxTsBuilder{
     * Description
     *
     */
-    public function addAnimation (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
+    public function addSequence (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
         var src  : BitmapData = (
             bmp != null
                 ? (Std.is(bmp, BitmapData) ? bmp : Assets.getBitmapData(Std.string(bmp), false))
@@ -141,7 +141,7 @@ class SxTsBuilder{
         }
 
         this._sequences.set(name, sequence);
-    }//function addAnimation()
+    }//function addSequence()
 
 
     /**
@@ -186,7 +186,7 @@ class SxTsBuilder{
             #end
         }
 
-        //set animations
+        //set sequences
         var frames : Array<String>;
         var tiles : Array<SxTile>;
         for(seq in this._sequences.keys()){
@@ -195,7 +195,7 @@ class SxTsBuilder{
             for(i in 0...frames.length){
                 tiles.push(ts._tiles.get(frames[i]));
             }
-            ts.animations.set(seq, tiles);
+            ts.sequences.set(seq, tiles);
         }
 
         return ts;

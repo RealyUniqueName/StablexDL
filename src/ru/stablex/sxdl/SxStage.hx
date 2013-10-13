@@ -241,13 +241,13 @@ class SxStage extends SxObject{
     * Description
     *
     */
-    public function addAnimation (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
+    public function addSequence (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
         if( this._tilesheet != null ){
             throw "Can't add new sprites after stage.lockSprites() was called.";
         }
 
-        this._tsBuilder.addAnimation(name, bmp, frameWidth, frameHeight, scale, spotX, spotY, smooth);
-    }//function addAnimation()
+        this._tsBuilder.addSequence(name, bmp, frameWidth, frameHeight, scale, spotX, spotY, smooth);
+    }//function addSequence()
 
 
     /**
@@ -281,10 +281,10 @@ class SxStage extends SxObject{
     * Get sequence of tiles
     *
     */
-    public function getAnimation (name:String) : Null<Array<SxTile>> {
-        var tiles = this.tilesheet.animations.get(name);
+    public function getSequence (name:String) : Null<Array<SxTile>> {
+        var tiles = this.tilesheet.sequences.get(name);
         return (tiles == null ? null : tiles.copy());
-    }//function getAnimation()
+    }//function getSequence()
 
 /*******************************************************************************
 *   GETTERS / SETTERS

@@ -24,7 +24,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     //tiles counter
     private var _cntTiles : Int = 0;
     /** description */
-    public var animations : Map<String, Array<SxTile>>;
+    public var sequences : Map<String, Array<SxTile>>;
 
     #if flash
         public var nmeBitmap : BitmapData;
@@ -41,7 +41,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
             super(bmp);
         #end
         this._tiles      = new Hash();
-        this.animations = new Map();
+        this.sequences = new Map();
     }//function new()
 
 

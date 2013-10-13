@@ -1,18 +1,18 @@
 package ru.stablex.sxdl;
 
-import com.eclecticdesignstudio.motion.Actuate;
-import com.eclecticdesignstudio.motion.actuators.GenericActuator;
-import com.eclecticdesignstudio.motion.easing.Quad;
-import com.eclecticdesignstudio.motion.easing.Expo;
-import com.eclecticdesignstudio.motion.easing.Bounce;
-import com.eclecticdesignstudio.motion.easing.Linear;
-import com.eclecticdesignstudio.motion.easing.Quint;
-import com.eclecticdesignstudio.motion.easing.Elastic;
-import com.eclecticdesignstudio.motion.easing.IEasing;
-import com.eclecticdesignstudio.motion.easing.Back;
-import com.eclecticdesignstudio.motion.easing.Quart;
-import com.eclecticdesignstudio.motion.easing.Cubic;
-import com.eclecticdesignstudio.motion.easing.Sine;
+import motion.Actuate;
+import motion.actuators.GenericActuator;
+import motion.easing.Quad;
+import motion.easing.Expo;
+import motion.easing.Bounce;
+import motion.easing.Linear;
+import motion.easing.Quint;
+import motion.easing.Elastic;
+import motion.easing.IEasing;
+import motion.easing.Back;
+import motion.easing.Quart;
+import motion.easing.Cubic;
+import motion.easing.Sine;
 
 
 /**
@@ -22,7 +22,7 @@ import com.eclecticdesignstudio.motion.easing.Sine;
 class TweenObject extends SxObject{
 
     /**
-    * Easy access to <type>com.eclecticdesignstudio.motion.Actuate</type>.tween for this object. Equals to <type>com.eclecticdesignstudio.motion.Actuate</type>.tween(this, ....).
+    * Easy access to <type>motion.Actuate</type>.tween for this object. Equals to <type>motion.Actuate</type>.tween(this, ....).
     * Parameter `easing` should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
     *
     */
@@ -63,7 +63,7 @@ class TweenObject extends SxObject{
 
 
     /**
-    * Calls <type>com.eclecticdesignstudio.motion.Actuate</type>.stop() for this object. By default `complete` and `sendEvent` equal to false
+    * Calls <type>motion.Actuate</type>.stop() for this object. By default `complete` and `sendEvent` equal to false
     *
     */
     public inline function tweenStop(properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = false) : Void {
