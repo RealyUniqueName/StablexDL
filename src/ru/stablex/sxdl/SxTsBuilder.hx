@@ -48,6 +48,15 @@ class SxTsBuilder{
 
 
     /**
+    * Overridable wrapper for openfl.Assets
+    *
+    */
+    static public dynamic function getBitmapData (id:String, cache:Bool = true) : BitmapData {
+        return Assets.getBitmapData(id, cache);
+    }//function getBitmapData()
+
+
+    /**
     * Constructor
     *
     */
@@ -74,8 +83,8 @@ class SxTsBuilder{
 
         var src  : BitmapData = (
             bmp != null
-                ? (Std.is(bmp, BitmapData) ? bmp : Assets.getBitmapData(Std.string(bmp), false))
-                : Assets.getBitmapData(name, false)
+                ? (Std.is(bmp, BitmapData) ? bmp : getBitmapData(Std.string(bmp), false))
+                : getBitmapData(name, false)
         );
         var data : TileData = new TileData();
 
@@ -116,8 +125,8 @@ class SxTsBuilder{
     public function addSequence (name:String, bmp:Dynamic, frameWidth:Int, frameHeight:Int, scale:Float = 1, spotX:Null<Float> = null, spotY:Null<Float> = null, smooth:Bool = true) : Void {
         var src  : BitmapData = (
             bmp != null
-                ? (Std.is(bmp, BitmapData) ? bmp : Assets.getBitmapData(Std.string(bmp), false))
-                : Assets.getBitmapData(name, false)
+                ? (Std.is(bmp, BitmapData) ? bmp : getBitmapData(Std.string(bmp), false))
+                : getBitmapData(name, false)
         );
 
         var wframes : Int = Std.int(src.width / frameWidth);
