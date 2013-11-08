@@ -20,7 +20,7 @@ private typedef Hash<T> = Map<String,T>;
 class SxTilesheet #if !flash extends Tilesheet #end {
 
     //description
-    public var _tiles : Hash<SxTile>;
+    public var _sxtiles : Hash<SxTile>;
     //tiles counter
     private var _cntTiles : Int = 0;
     /** description */
@@ -40,7 +40,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
         #else
             super(bmp);
         #end
-        this._tiles      = new Hash();
+        this._sxtiles      = new Hash();
         this.sequences = new Map();
     }//function new()
 
@@ -50,7 +50,7 @@ class SxTilesheet #if !flash extends Tilesheet #end {
     *
     */
     public function createTile (name:String, rect:Rectangle, center:Point) : Void {
-        this._tiles.set(name, new SxTile(this._cntTiles, rect.width, rect.height, center.x, center.y));
+        this._sxtiles.set(name, new SxTile(this._cntTiles, rect.width, rect.height, center.x, center.y));
 
         #if !flash
         this.addTileRect(rect, center);

@@ -193,7 +193,7 @@ class SxTsBuilder{
             frames = this._sequences.get(seq);
             tiles  = [];
             for(i in 0...frames.length){
-                tiles.push(ts._tiles.get(frames[i]));
+                tiles.push(ts._sxtiles.get(frames[i]));
             }
             ts.sequences.set(seq, tiles);
         }

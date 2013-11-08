@@ -273,7 +273,7 @@ class SxStage extends SxObject{
             }
         #end
 
-        return this.tilesheet._tiles.get(name);
+        return this.tilesheet._sxtiles.get(name);
     }//function getTile()
 
 
