@@ -596,7 +596,7 @@ class SxObject extends EventDispatcher{
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.b;
             this.stage.tileData[ tileDataIdx ++ ] = this._mx.d;
             #end
-			
+
 			this.stage.tileData[ tileDataIdx ++ ] = this._alpha;
 
             //build arrays for graphics.drawTriangles()
@@ -731,11 +731,11 @@ class SxObject extends EventDispatcher{
 	private inline function set_alpha (alpha:Float) : Float {
         return this._alpha = alpha;
     }
-	
+
 	private inline function get_alpha () : Float {
         return this._alpha;
     }
-	
+
     /**
     * Getter `y`.
     *
